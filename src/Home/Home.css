@@ -6,7 +6,6 @@
   width: 100vw;
   background-size: cover;
   display: flex;
-  z-index: 1;
 }
 
 /* .login {
