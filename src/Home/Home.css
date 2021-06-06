@@ -1,0 +1,18 @@
+.home {
+  background-image: url(https://images.unsplash.com/photo-1526256262350-7da7584cf5eb?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80);
+  background-repeat: no-repeat;
+  background-position: center;
+  height: 100vh;
+  width: 100vw;
+  background-size: cover;
+  display: flex;
+  z-index: 1;
+}
+
+/* .login {
+  width: 50px;
+  height: 100px;
+  position: absolute;
+  display: flex;
+  margin-left: 30px;
+} */
