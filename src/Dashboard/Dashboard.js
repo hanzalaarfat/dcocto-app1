@@ -1,17 +1,26 @@
 /* This example requires Tailwind CSS v2.0+ */
-import { Fragment } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { BellIcon, MenuIcon, XIcon } from "@heroicons/react/outline";
 import Cards from "./Cards";
 
-const navigation = ["Dashboard", "Team", "Projects", "Calendar", "Reports"];
-const profile = ["Your Profile", "Settings", "Sign out"];
+const navigation = [
+  "Dashboard",
+  "Appointment",
+  "PatientRecards",
+  "FacingIssue",
+  "AddPrescription",
+];
+const profile = ["Your Profil", "Settings", "Sign out"];
+const [route, setRoute] = [];
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
 export default function Dashboard() {
+  const [route, setRoute] = useState([]);
+
   return (
     <div>
       <Disclosure as="nav" className="bg-gray-800">
@@ -34,7 +43,7 @@ export default function Dashboard() {
                           <Fragment key={item}>
                             {/* Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" */}
                             <a
-                              href="#"
+                              href="/dashboard"
                               className="bg-gray-900 text-white px-3 py-2 rounded-md text-sm font-medium"
                             >
                               {item}
@@ -43,7 +52,8 @@ export default function Dashboard() {
                         ) : (
                           <a
                             key={item}
-                            href="#"
+                            href={navigation[itemIdx]}
+                            //onClick={changepath({ item,itemIdx })}
                             className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
                           >
                             {item}
@@ -194,9 +204,7 @@ export default function Dashboard() {
       </header>
       <main>
         <div className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
-          <div className="px-4 py-6 sm:px-0">
-            <Cards />
-          </div>
+          <div className="px-4 py-6 sm:px-0"></div>
         </div>
       </main>
     </div>
