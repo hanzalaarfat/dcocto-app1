@@ -1,7 +1,52 @@
-import React from "react";
+import { NavLink, useHistory } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import Axios from "axios";
+
 // import { LockClosedIcon } from "@heroicons/react/solid";
 
 function Login() {
+  const history = useHistory();
+
+  const [user, setUser] = useState({
+    email: "",
+    password: "",
+  });
+
+  let name, value;
+  const handleInputs = (e) => {
+    // console.log(e);
+    name = e.target.name;
+    value = e.target.value;
+    // console.log(value);
+    // console.log(name);
+
+    setUser({ ...user, [name]: value }); //// will take the name from line 15
+  };
+  // console.log(user);
+
+  const PostData = async (e) => {
+    e.preventDefault();
+
+    const { email, password } = user;
+    console.log("email.....", email);
+
+    await Axios.post("https://capstone-health.herokuapp.com/doctor/login", {
+      email,
+      password,
+    })
+      .then((res) => {
+        console.log(res);
+        console.log(res.data);
+        window.alert("resposne", res.data);
+        localStorage.setItem("token", res.data.token);
+        localStorage.setItem("drId", res.data._id);
+        history.push("/dashboard");
+      })
+      .catch((err) => {
+        window.alert("errr", err);
+      });
+  };
+
   return (
     <div className="min-h-0 items-center max-h-30 max-w-50  justify-center bg-gray-200 py-12 px-4 sm:px-6 lg:px-8 lg:mt-35 lg:ml:30 md:mt-32 md:ml-64">
       <div className="max-w-md w-50 h-100  space-y-6">
@@ -10,7 +55,7 @@ function Login() {
             Sign in
           </h2>
         </div>
-        <form className="mt-8 space-y-6" action="#" method="POST">
+        <form className="mt-8 space-y-6">
           <input type="hidden" name="remember" defaultValue="true" />
           <div className="rounded-md shadow-sm -space-y-px">
             <div>
@@ -20,11 +65,13 @@ function Login() {
               <input
                 id="email-address"
                 name="email"
-                type="email"
+                type="text"
                 autoComplete="email"
                 required
                 className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                 placeholder="Email address"
+                value={user.email}
+                onChange={handleInputs}
               />
             </div>
             <div>
@@ -39,6 +86,8 @@ function Login() {
                 required
                 className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                 placeholder="Password"
+                value={user.password}
+                onChange={handleInputs}
               />
             </div>
           </div>
@@ -82,14 +131,9 @@ function Login() {
           <div>
             <button
               type="submit"
-              className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              className="font-medium text-indigo-600 hover:text-indigo-500"
+              onClick={PostData}
             >
-              {/* <span className="absolute left-0 inset-y-0 flex items-center pl-3">
-                <LockClosedIcon
-                  className="h-5 w-5 text-indigo-500 group-hover:text-indigo-400"
-                  aria-hidden="true"
-                />
-              </span> */}
               Sign in
             </button>
           </div>
